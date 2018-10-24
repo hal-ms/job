@@ -1,7 +1,7 @@
-ECS_ID := 290722748162
+ECS_ID := 429564250042
 AWS_REGION     := ap-northeast-1
-APP := patra-production
-CLUSTER := production
+APP := ms-server
+CLUSTER := ms
 
 export AWS_REGION
 export AWS_DEFAULT_REGION=$(AWS_REGION)

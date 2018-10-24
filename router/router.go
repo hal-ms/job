@@ -1,13 +1,18 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetRouter() *gin.Engine {
-	r:=gin.Default()
+	r := gin.Default()
 	r.Use(cros)
+	r.GET("/alive", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
 	apiRouter(r.Group("/api"))
 	return r
 }

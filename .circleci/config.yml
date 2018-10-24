@@ -4,7 +4,7 @@ jobs:
     environment:
       - GO111MODULE: "on"
       - CGO_ENABLED: "0"
-    working_directory: /go/src/github.com/chotchy-inc/PATRAProductAPI
+    working_directory: /go/src/work
     docker:
       - image: makki0205/deploy
     steps:
@@ -13,9 +13,6 @@ jobs:
           name: yml file copy
           command: make create
       - run:
-          name: go test
-          command: make test
-      - run:
           name: go build
           command: make -f .circleci/ci.mk go/build
       - save_cache:
@@ -23,7 +20,7 @@ jobs:
           paths:
             - .
   production:
-    working_directory: /go/src/github.com/chotchy-inc/PATRAProductAPI
+    working_directory: /go/src/work
     docker:
       - image: makki0205/deploy
     steps:
@@ -45,40 +42,11 @@ jobs:
           name: deploy
           command: make -f .circleci/ci.mk docker/deploy
 
-  staging:
-    working_directory: /go/src/github.com/chotchy-inc/PATRAProductAPI
-    docker:
-      - image: makki0205/deploy
-    steps:
-      - setup_remote_docker:
-          reusable: true
-      - restore_cache:
-          keys:
-            - build
-      - run:
-          name: docker build
-          command: make -f .circleci/staging.mk docker/build
-      - run:
-          name: aws login
-          command: make -f .circleci/staging.mk login
-      - run:
-          name: docker push
-          command: make -f .circleci/staging.mk docker/push
-      - run:
-          name: deploy
-          command: make -f .circleci/staging.mk docker/deploy
-
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - test
-      - staging:
-          requires:
-            - test
-          filters:
-            branches:
-              only: develop
       - production:
           requires:
             - test
