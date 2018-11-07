@@ -11,6 +11,9 @@ import (
 	"github.com/hal-ms/job/repo"
 )
 
+func GetAll(c *gin.Context) {
+	util.Json(gin.H{"jobs": repo.Job.All().IsDone(false).SortByCreated()}, c)
+}
 func OpenJob(c *gin.Context) {
 	token := repo.Token.FindByID(c.Param("token"))
 	if token == nil {
@@ -32,20 +35,24 @@ func CreateJob(c *gin.Context) {
 		return
 	}
 
-	token := repo.Token.FindByID(c.Param("token"))
-	if token == nil {
-		util.NotFound(c)
-		return
-	}
-	if token.Done {
-		util.NotFound(c)
-		return
+	// test mode
+	if c.Param("token") != "masui" {
+		token := repo.Token.FindByID(c.Param("token"))
+		if token == nil {
+			util.NotFound(c)
+			return
+		}
+		if token.Done {
+			util.NotFound(c)
+			return
+		}
+
+		// tokenの無効化
+		token.IsOpen = true
+		token.Done = true
+		repo.Token.Update(*token)
 	}
 
-	// tokenの無効化
-	token.IsOpen = true
-	token.Done = true
-	repo.Token.Update(*token)
 	// jobの登録
 	util.Json(repo.Job.Store(*req), c)
 

@@ -13,4 +13,5 @@ func apiRouter(api *gin.RouterGroup) {
 	api.GET("/jobs/:jobs", cnt.GetJobs)
 
 	api.GET("/job_categorys", cnt.GetJobCategorys)
+	api.GET("/admin/jobs", cnt.GetAll)
 }
