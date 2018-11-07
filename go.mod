@@ -5,6 +5,9 @@ require (
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-sql-driver/mysql v1.4.0
+	github.com/googollee/go-engine.io v0.0.0-20180829091931-e2f255711dcb // indirect
+	github.com/googollee/go-socket.io v0.0.0-20181101151912-c8aeb1ed9b49
+	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/makki0205/config v0.0.0-20180305065030-70207588bbb4
 	github.com/mattn/go-isatty v0.0.4 // indirect

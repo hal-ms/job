@@ -13,7 +13,12 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "axios": "^0.18.0",
+    "nuxt": "^2.0.0",
+    "qrcode.vue": "^1.6.1",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "vue-qriously": "^1.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
