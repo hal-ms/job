@@ -21,6 +21,7 @@ export default {
   mounted() {
     this.GetToken();
     this.socket = io("https://hal-iot.net");
+    // this.socket = io("localhost:8000");
     this.socket.on("open", msg => {
       this.GetToken();
     });
