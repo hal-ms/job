@@ -29,7 +29,7 @@ func GetRouter() *gin.Engine {
 
 func cros(c *gin.Context) {
 	headers := c.Request.Header.Get("Access-Control-Request-Headers")
-	c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Credentials", "true")
 	c.Header("Access-Control-Allow-Methods", "GET,POST,PUT,HEAD,PATCH,DELETE,OPTIONS")
 	c.Header("Access-Control-Allow-Headers", headers)
