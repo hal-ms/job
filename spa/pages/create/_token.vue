@@ -115,6 +115,7 @@ export default {
     clearLocalStorage() {
       localStorage.removeItem("jobIDList");
       localStorage.removeItem("userName");
+      localStorage.removeItem("doneIds");
       console.log("cleared local storage");
     },
 
