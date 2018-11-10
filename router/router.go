@@ -19,7 +19,7 @@ func GetRouter() *gin.Engine {
 	r.LoadHTMLGlob("spa/dist/200.html")
 	r.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusOK, "200.html", nil)
-	})w
+	})
 	apiRouter(r.Group("/api"))
 
 	r.GET("/socket.io/", func(c *gin.Context) {
