@@ -29,7 +29,7 @@ export default {
   methods: {
     GetToken: function() {
       axios.get("https://hal-iot.net/api/token").then(res => {
-        this.url = res.data.id;
+        this.url = "http://172.20.10.3:3000/create/" + res.data.id;
         console.log(res.data.id);
       });
     }

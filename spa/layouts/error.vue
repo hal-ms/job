@@ -17,6 +17,11 @@
 </template>
 <script>
 export default {
-  props: ['error'],
-}
+  props: ["error"],
+  mounted() {
+    setTimeout(() => {
+      this.$router.push("/jobs");
+    }, 2000);
+  }
+};
 </script>
