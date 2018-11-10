@@ -15,6 +15,7 @@ RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
 ADD ./cmd/main .
 ADD ./config.yml ./config.yml
+ADD ./spa/dist ./spa/dist
 
 
 EXPOSE 8000

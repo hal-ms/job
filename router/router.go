@@ -15,6 +15,11 @@ func GetRouter() *gin.Engine {
 		socket.SendAll("test", "hogehoge")
 		c.Status(http.StatusOK)
 	})
+	r.Static("/_nuxt", "./spa/dist/_nuxt")
+	r.LoadHTMLGlob("spa/dist/200.html")
+	r.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusOK, "200.html", nil)
+	})
 	apiRouter(r.Group("/api"))
 
 	r.GET("/socket.io/", func(c *gin.Context) {

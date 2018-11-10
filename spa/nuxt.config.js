@@ -1,4 +1,8 @@
+global.File = typeof window === 'undefined' ? Object : window.File
 module.exports = {
+  modules: [
+    'nuxt-buefy',
+  ],
   /*
   ** Headers of the page
   */
