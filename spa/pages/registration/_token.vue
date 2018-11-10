@@ -67,8 +67,6 @@ export default {
             return
           }
 
-          console.log("hello")
-
           let jobIDStr = localStorage.getItem("jobIDList")
           if (jobIDStr) {
             let jobIDList = jobIDStr.split(",")
@@ -78,7 +76,10 @@ export default {
             localStorage.setItem("jobIDList", res.data.id)
           }
           localStorage.setItem("userName", this.userName)
-          this.$router.push("/jobs")
+
+          // this.load()
+          // this.$router.push("/jobs")
+          this.load()
         })
     },
 
@@ -87,6 +88,20 @@ export default {
         message: msg,
         type: 'is-danger'
       })
+    },
+
+    sleepByPromise(sec) {
+      return new Promise(resolve => setTimeout(resolve, sec*1000));
+    },
+
+    async load() {
+      const loadingComponent = this.$loading.open({
+        container: this.isFullPage
+      })
+      await this.sleepByPromise(1)
+      loadingComponent.close()
+      console.log("konnichiwa")
+      this.$router.push("/jobs")
     },
 
     showLocalStorage() {
