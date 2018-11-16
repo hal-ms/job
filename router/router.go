@@ -5,14 +5,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hal-ms/job/socket"
 )
 
 func GetRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(cros)
 	r.GET("/alive", func(c *gin.Context) {
-		socket.SendAll("test", "hogehoge")
 		c.Status(http.StatusOK)
 	})
 	r.Static("/_nuxt", "./spa/dist/_nuxt")
@@ -21,14 +19,6 @@ func GetRouter() *gin.Engine {
 		c.HTML(http.StatusOK, "200.html", nil)
 	})
 	apiRouter(r.Group("/api"))
-
-	r.GET("/socket.io/", func(c *gin.Context) {
-		socket.Server.ServeHTTP(c.Writer, c.Request)
-	})
-	r.POST("/socket.io/", func(c *gin.Context) {
-		socket.Server.ServeHTTP(c.Writer, c.Request)
-	})
-
 	return r
 }
 

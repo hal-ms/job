@@ -2,12 +2,12 @@ package cnt
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hal-ms/job/cnt/util"
 	"github.com/hal-ms/job/model"
 	"github.com/hal-ms/job/repo"
-	"github.com/hal-ms/job/socket"
 )
 
 func GetToken(c *gin.Context) {
@@ -27,7 +27,7 @@ func AliveToken(c *gin.Context) {
 		}
 		if !token.IsOpen {
 			fmt.Println("send!")
-			socket.SendAll("open", "空いたよ！")
+			http.Get("https://socket.patra.store/emit/qr/open")
 		}
 		token.IsOpen = true
 		repo.Token.Update(*token)
