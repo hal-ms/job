@@ -7,11 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var qr_host = "http://172.20.10.3:8000/qr"
+
 func GetRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(cros)
 	r.GET("/alive", func(c *gin.Context) {
 		c.Status(http.StatusOK)
+	})
+	r.GET("/qr", func(c *gin.Context) {
+		c.Redirect(http.StatusFound, qr_host)
 	})
 	r.Static("/_nuxt", "./spa/dist/_nuxt")
 	r.LoadHTMLGlob("spa/dist/200.html")
