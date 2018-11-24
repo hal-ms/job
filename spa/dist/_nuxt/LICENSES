@@ -30,22 +30,6 @@ object-assign
 */
 
 /*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
-/*! https://mths.be/utf8js v2.1.2 by @mathias */
-
-/*!
- * qrcode.vue v1.6.1
- * A Vue component for QRCode.
- * © 2017-2018 @scopewu
- * MIT License.
- */
-
-/*!
  * vue-no-ssr v1.0.0
  * (c) 2018-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
