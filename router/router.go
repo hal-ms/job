@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	iwRouter "github.com/hal-ms/job/iw/router"
 )
 
 var qr_host = "http://172.20.10.3:8000/qr"
@@ -24,6 +25,7 @@ func GetRouter() *gin.Engine {
 		c.HTML(http.StatusOK, "200.html", nil)
 	})
 	apiRouter(r.Group("/api"))
+	iwRouter.GetRouter(r.Group("/iw"))
 	return r
 }
 
