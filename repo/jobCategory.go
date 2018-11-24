@@ -24,10 +24,6 @@ func init() {
 			DisplayName: "大工",
 		},
 		model.JobCategory{
-			Name:        "judge",
-			DisplayName: "裁判官",
-		},
-		model.JobCategory{
 			Name:        "pianist",
 			DisplayName: "ピアニスト",
 		},
