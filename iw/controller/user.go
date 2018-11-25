@@ -72,12 +72,12 @@ func (u *userController) Update(c *gin.Context) {
 		return
 	}
 	var req struct {
-		Name string `json:"name" binding:"max:15"`
+		Name string `json:"name" binding:"max=15"`
 		PId  int    `json:"p_id"`
 	}
 	err := c.BindJSON(&req)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, nil)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
