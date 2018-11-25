@@ -191,4 +191,5 @@ func (u *userController) UpdateIcon(c *gin.Context) {
 	user.Icon = "https://s3-us-west-2.amazonaws.com/dinner-match/nellow/" + name
 	service.User.Update(*user)
 	c.JSON(http.StatusOK, user)
+
 }
