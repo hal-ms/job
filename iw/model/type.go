@@ -9,16 +9,13 @@ type User struct {
 	Icon                 string        `json:"icon"`
 	Name                 string        `json:"name"`
 	ProvidingDestination `json:"providing_destination"`
-	// NellowID             bson.ObjectId `json:"nellow_id" bson:"nellow_id"`
+	IsNellow             bool `json:"is_nellow"`
 }
 
 type Users []User
 
 type ProvidingDestination struct {
+	PID   int    `json:"id"`
 	PName string `json:"name"`
 	PRate uint   `json:"rate"`
-}
-
-type Nellow struct {
-	ID bson.ObjectId `json:"id" bson:"_id,omitempty"`
 }

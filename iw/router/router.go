@@ -3,5 +3,5 @@ package router
 import "github.com/gin-gonic/gin"
 
 func GetRouter(r *gin.RouterGroup) {
-	UserApiRouter(r.Group("/user"))
+	UserApiRouter(r.Group("/users"))
 }
