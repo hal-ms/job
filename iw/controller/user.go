@@ -44,10 +44,10 @@ func (u *userController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-	fmt.Println(req.IsNellow)
 	var user model.User
 	user.ID = bson.NewObjectId()
 	user.Name = "bcp-guest"
+	user.IsNellow = req.IsNellow
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(20) + 1
 
