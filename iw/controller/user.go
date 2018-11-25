@@ -39,7 +39,7 @@ func (u *userController) Create(c *gin.Context) {
 	user.ID = bson.NewObjectId()
 	user.Name = "bcp-guest-00"
 	user.Icon = "hogehoge.iconUrl.com"
-
+	user.PDSet(1)
 	err = service.User.Create(user)
 	if err != nil {
 		fmt.Println(err)
@@ -72,9 +72,8 @@ func (u *userController) Update(c *gin.Context) {
 		user.Name = req.Name
 	}
 
-	fmt.Println(req.PId)
 	if req.PId != 0 {
-		user.PID = req.PId
+		user.PDSet(req.PId)
 	}
 
 	err = service.User.Update(*user)
