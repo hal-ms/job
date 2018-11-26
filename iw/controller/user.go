@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"time"
 
+	"gopkg.in/mgo.v2"
+
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/gin-gonic/gin"
@@ -44,13 +46,28 @@ func (u *userController) Create(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
+
+	if req.IsNellow {
+		user, err := service.User.ResetNellower()
+		fmt.Println(err)
+		if err != nil {
+			if err != mgo.ErrNotFound {
+				c.JSON(http.StatusInternalServerError, "error by reset nellower...")
+				return
+			}
+		}
+		if user != nil {
+			c.JSON(http.StatusOK, user)
+			return
+		}
+	}
+
 	var user model.User
 	user.ID = bson.NewObjectId()
 	user.Name = "bcp-guest"
 	user.IsNellow = req.IsNellow
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(20) + 1
-
 	user.Icon = "https://s3-us-west-2.amazonaws.com/dinner-match/nellow/default_img/" + strconv.Itoa(num) + ".png"
 	user.PDSet(1)
 	err = service.User.Create(user)

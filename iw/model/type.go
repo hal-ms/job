@@ -8,8 +8,8 @@ type User struct {
 	ID                   bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Icon                 string        `json:"icon"`
 	Name                 string        `json:"name"`
-	ProvidingDestination `json:"providing_destination"`
-	IsNellow             bool `json:"is_nellow"`
+	ProvidingDestination `json:"providing_destination" bson:"providing_destination"`
+	IsNellow             bool `json:"is_nellow" bson:"is_nellow"`
 }
 
 type Users []User

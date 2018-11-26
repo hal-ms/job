@@ -1,6 +1,11 @@
 package service
 
 import (
+	"fmt"
+	"math/rand"
+	"strconv"
+	"time"
+
 	"github.com/hal-ms/job/iw/model"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -29,6 +34,25 @@ func (u *userService) FindByID(id string) *model.User {
 		return nil
 	}
 	return &user
+}
+
+func (u *userService) ResetNellower() (*model.User, error) {
+	var user model.User
+	err := u.C.Find(bson.M{"is_nellow": true}).One(&user)
+	fmt.Println(user)
+	if err != nil {
+		return nil, err
+	}
+	user.Name = "bcp-guest"
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn(20) + 1
+	user.Icon = "https://s3-us-west-2.amazonaws.com/dinner-match/nellow/default_img/" + strconv.Itoa(num) + ".png"
+	user.PDSet(1)
+	err = u.Update(user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (u *userService) Create(user model.User) error {
