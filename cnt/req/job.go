@@ -22,6 +22,8 @@ func Job(c *gin.Context) *model.Job {
 		return nil
 	}
 	job.DisplayName = jC.DisplayName
+	job.ImageColor = jC.ImageColor
+	job.ImageIcon = jC.ImageIcon
 	job.Done = false
 	job.Created = time.Now()
 	return &job
