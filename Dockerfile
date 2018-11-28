@@ -14,7 +14,7 @@ RUN set -x \
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
 ADD ./cmd/main .
-ADD ./public .
+ADD ./public ./public
 ADD ./config.yml ./config.yml
 ADD ./spa/dist ./spa/dist
 ADD ./iw/tmp ./iw/tmp
