@@ -8,6 +8,8 @@ type jobCategoryRepo struct {
 	all model.JobCategorys
 }
 
+var publicBase = "https://hal-iot.net/public"
+
 func init() {
 	JobCategory = jobCategoryRepo{}
 	JobCategory.all = model.JobCategorys{
@@ -15,31 +17,31 @@ func init() {
 			Name:        "programmer",
 			DisplayName: "プログラマー",
 			ImageColor:  "#8069ac",
-			ImageIcon:   "~assets/icon/programmer.svg",
+			ImageIcon:   publicBase + "/icon/programmer.svg",
 		},
 		model.JobCategory{
 			Name:        "cook",
 			DisplayName: "料理人",
 			ImageColor:  "#e74091",
-			ImageIcon:   "~assets/icon/cook.svg",
+			ImageIcon:   publicBase + "/icon/cook.svg",
 		},
 		model.JobCategory{
 			Name:        "carpenter",
 			DisplayName: "大工",
 			ImageColor:  "#92c423",
-			ImageIcon:   "~assets/icon/carpenter.svg",
+			ImageIcon:   publicBase + "/icon/carpenter.svg",
 		},
 		model.JobCategory{
 			Name:        "pianist",
 			DisplayName: "ピアニスト",
 			ImageColor:  "#f5b628",
-			ImageIcon:   "~assets/icon/pianist.svg",
+			ImageIcon:   publicBase + "/icon/pianist.svg",
 		},
 		model.JobCategory{
 			Name:        "priest",
 			DisplayName: "お坊さん",
 			ImageColor:  "#40bfec",
-			ImageIcon:   "~assets/icon/priest.svg",
+			ImageIcon:   publicBase + "/icon/priest.svg",
 		},
 	}
 }
