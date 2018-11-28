@@ -26,6 +26,7 @@ type Token struct {
 type JobCategory struct {
 	Name        string `json:"name"`
 	DisplayName string `json:"display_name"`
+	ImageColor string `json:"image_color"`
 }
 
 type JobCategorys []JobCategory

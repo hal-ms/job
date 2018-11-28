@@ -14,22 +14,27 @@ func init() {
 		model.JobCategory{
 			Name:        "programmer",
 			DisplayName: "プログラマー",
+			ImageColor:  "#8069ac",
 		},
 		model.JobCategory{
 			Name:        "cook",
 			DisplayName: "料理人",
+			ImageColor:  "#e74091",
 		},
 		model.JobCategory{
 			Name:        "carpenter",
 			DisplayName: "大工",
+			ImageColor:  "#92c423",
 		},
 		model.JobCategory{
 			Name:        "pianist",
 			DisplayName: "ピアニスト",
+			ImageColor:  "#f5b628",
 		},
 		model.JobCategory{
 			Name:        "priest",
-			DisplayName: "僧侶",
+			DisplayName: "お坊さん",
+			ImageColor:  "#40bfec",
 		},
 	}
 }
