@@ -20,6 +20,7 @@ func GetRouter() *gin.Engine {
 		c.Redirect(http.StatusFound, qr_host)
 	})
 	r.Static("/_nuxt", "./spa/dist/_nuxt")
+	r.Static("/public", "./public")
 	r.LoadHTMLGlob("spa/dist/200.html")
 	r.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusOK, "200.html", nil)
