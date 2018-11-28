@@ -9,7 +9,8 @@ type User struct {
 	Icon                 string        `json:"icon"`
 	Name                 string        `json:"name"`
 	ProvidingDestination `json:"providing_destination" bson:"providing_destination"`
-	IsNellow             bool `json:"is_nellow" bson:"is_nellow"`
+	IsNellow             bool 			`json:"is_nellow" bson:"is_nellow"`
+	Amount				 int			`json:"amount"`
 }
 
 type Users []User

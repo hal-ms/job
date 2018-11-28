@@ -20,7 +20,7 @@ import (
 	"github.com/hal-ms/job/iw/httpUtil"
 	"github.com/hal-ms/job/iw/model"
 	"github.com/hal-ms/job/iw/service"
-	"github.com/oliamb/cutter"
+	"github.com/satori/go.uuid"
 )
 
 var UserController userController
@@ -116,6 +116,11 @@ func (u *userController) Update(c *gin.Context) {
 func (u *userController) UpdateIcon(c *gin.Context) {
 	id := c.Param("id")
 	user := service.User.FindByID(id)
+	if user == nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"msg": "user not found",
+		})
+	}
 	icon, err := c.FormFile("icon")
 	if err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("get form err: %s", err.Error()))
@@ -167,13 +172,7 @@ func (u *userController) UpdateIcon(c *gin.Context) {
 		return
 	}
 
-	croppedImg, err := cutter.Crop(img, cutter.Config{
-		Width:  500,
-		Height: 500,
-		Mode:   cutter.Centered,
-	})
-
-	name := user.ID.Hex() + "." + format
+	name := uuid.NewV4().String() + "." + format
 	tmpf, err := os.Create("./iw/tmp/" + name)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -184,11 +183,11 @@ func (u *userController) UpdateIcon(c *gin.Context) {
 	defer tmpf.Close()
 	switch format {
 	case "png":
-		err = png.Encode(tmpf, croppedImg)
+		err = png.Encode(tmpf, img)
 	case "jpeg":
-		err = jpeg.Encode(tmpf, croppedImg, nil)
+		err = jpeg.Encode(tmpf, img, nil)
 	case "gif":
-		err = gif.Encode(tmpf, croppedImg, nil)
+		err = gif.Encode(tmpf, img, nil)
 	}
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
