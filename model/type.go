@@ -14,6 +14,7 @@ type Job struct {
 	Done         bool          `json:"done"`
 	Notification bool          `json:"notification"`
 	ImageColor   string        `json:"image_color"`
+	ImageIcon    string        `json:"image_icon"`
 	Created      time.Time     `json:"created"`
 }
 type Jobs []Job
@@ -28,6 +29,7 @@ type JobCategory struct {
 	Name        string `json:"name"`
 	DisplayName string `json:"display_name"`
 	ImageColor  string `json:"image_color"`
+	ImageIcon   string `json:"image_icon"`
 }
 
 type JobCategorys []JobCategory
