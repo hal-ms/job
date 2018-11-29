@@ -1,12 +1,30 @@
 <template>
-  <section>
-    <h1 class="title">ジョブ登録</h1>
-    <b-field label="ユーザー名">
-      <b-input v-model="userName"></b-input>
-    </b-field>
+  <section class="create-job-page-container">
+    <div class="input-container">
+      <b-field label="name">
+        <input type="text" v-model="userName">
+      </b-field>
+    </div>
 
-    <b-table :data="jobCategory" :columns="jobCategoryClm" :selected.sync="selected" focusable></b-table>
-    <a class="button" @click="registerJob">登録</a>
+    <div class="job-categories">
+      <ul>
+        <li v-for="(job, index) in jobCategory" :key="index" @click="selectJob(job)">
+          <div
+            class="job"
+            :class="{'selected': currentSelectedJob && currentSelectedJob.name === job.name}"
+          >
+            <div class="job-icon">
+              <img :src="job.image_icon" alt>
+            </div>
+            <div class="job-name">{{job.display_name}}</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="button-container">
+      <button class="create-button" @click="registerJob"></button>
+    </div>
 
     <h2 class="title">DEBUG</h2>
     <a class="button" @click="showLocalStorage">ローカルストレージを表示</a>
@@ -14,6 +32,82 @@
     <p>local storage: {{ jobIDList }}</p>
   </section>
 </template>
+
+<style scoped>
+.create-job-page-container {
+  width: 100vw;
+  min-height: 100vh;
+  padding-top: 50vw;
+  background-image: url("~assets/create_back.svg");
+  background-size: 100%;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input-container input {
+  outline: none;
+  background: transparent;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  text-indent: 0.5rem;
+}
+.job-categories ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem 0;
+}
+.job {
+  margin: 0.5rem;
+  width: 25vw;
+  height: 25vw;
+  border-radius: 50%;
+  background-image: url("~assets/circle.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #fff;
+}
+.job.selected {
+  width: 30vw;
+  height: 30vw;
+}
+.job .job-icon {
+  width: 100%;
+  margin: 0 auto;
+}
+.job .job-icon img {
+  display: block;
+  width: 100%;
+}
+.job .job-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+.create-button {
+  border: 0;
+  outline: none;
+  width: 60vw;
+  height: 13vw;
+  margin: 0 auto;
+  background-image: url("~assets/create_button.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  border-radius: 10px;
+}
+</style>
+
 
 <script>
 import axios from "axios";
@@ -39,8 +133,9 @@ export default {
       userName: "",
 
       jobCategory: [],
-      jobCategoryClm: [{ field: "display_name", label: "ジョブ名" }],
-      selected: null
+      selected: null,
+
+      currentSelectedJob: null
     };
   },
 
@@ -52,17 +147,20 @@ export default {
   },
 
   methods: {
+    selectJob(job) {
+      this.currentSelectedJob = job;
+    },
     registerJob() {
       let token = this.parseToken();
 
-      if (this.selected == null) {
+      if (this.currentSelectedJob == null) {
         this.danger("ジョブが選択されていません");
         return;
       }
 
       axios
         .post("https://hal-iot.net/api/job/" + token, {
-          name: this.selected.name,
+          name: this.currentSelectedJob.name,
           user_name: this.userName
         })
         .then(res => {
@@ -104,7 +202,6 @@ export default {
       });
       await this.sleepByPromise(1);
       loadingComponent.close();
-      console.log("konnichiwa");
       this.$router.push("/jobs");
     },
 
