@@ -4,9 +4,7 @@ development:
   database: ms
   dbUser: develop
   dbPassword: develop
-
-
-
+  
 production:
   port: :8000
   dbhost: staging-shard-00-00-ylaoy.mongodb.net:27017,staging-shard-00-01-ylaoy.mongodb.net:27017,staging-shard-00-02-ylaoy.mongodb.net:27017
