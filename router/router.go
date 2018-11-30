@@ -8,7 +8,7 @@ import (
 	iwRouter "github.com/hal-ms/job/iw/router"
 )
 
-var qr_host = "http://172.20.10.3:8000/qr"
+var qr_host = "http://192.168.0.7:8000/qr"
 
 func GetRouter() *gin.Engine {
 	r := gin.Default()
