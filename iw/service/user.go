@@ -47,6 +47,7 @@ func (u *userService) ResetNellower() (*model.User, error) {
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(20) + 1
 	user.Icon = "https://s3-us-west-2.amazonaws.com/dinner-match/nellow/default_img/" + strconv.Itoa(num) + ".png"
+	user.Amount = 0
 	user.PDSet(1)
 	err = u.Update(user)
 	if err != nil {
