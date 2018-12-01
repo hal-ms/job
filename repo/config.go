@@ -7,7 +7,7 @@ var Config configService
 type configService struct {
 }
 
-var config = model.Config{
+var configRep = model.Config{
 	Url: model.Url{
 		Main:   "http://192.168.0.9",
 		LED:    "http://192.168.0.2",
@@ -17,9 +17,9 @@ var config = model.Config{
 }
 
 func (c configService) Get() model.Config {
-	return config
+	return configRep
 }
 
 func (c configService) Set(cnf model.Config) {
-	config = cnf
+	configRep = cnf
 }
