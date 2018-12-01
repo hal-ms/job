@@ -39,6 +39,7 @@ func (u *userController) Get(c *gin.Context) {
 
 func (u *userController) Create(c *gin.Context) {
 	var req struct {
+		Name	string `json:"name" binding:"max=15"`
 		IsNellow bool `json:"is_nellow"`
 	}
 	err := c.BindJSON(&req)
@@ -65,6 +66,9 @@ func (u *userController) Create(c *gin.Context) {
 	var user model.User
 	user.ID = bson.NewObjectId()
 	user.Name = "bcp-guest"
+	if req.Name != "" {
+		user.Name = req.Name
+	}
 	user.IsNellow = req.IsNellow
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(20) + 1
