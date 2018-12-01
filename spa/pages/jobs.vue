@@ -41,7 +41,7 @@ export default {
   mounted() {
     // for test
     //this.setAlwaysDoneJobID()
-
+    this.from = localStorage.getItem("userName");
     this.getJobs();
     setInterval(this.getJobs, 500);
   },
@@ -115,15 +115,17 @@ export default {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: rgb(255, 192, 179);
   overflow: scroll;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  /* scroll-behavior: smooth; */
+  /* -webkit-overflow-scrolling: touch; */
 }
 .jobs-page-container {
   width: 100vw;
   padding-top: 50vw;
+  padding-bottom: 5rem;
   background-image: url("~assets/jobs_back.svg");
   background-size: 100%;
   background-repeat: no-repeat;
