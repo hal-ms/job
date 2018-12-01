@@ -22,6 +22,15 @@ func (n *nellowController) Sleep(c *gin.Context) {
 		c.JSON(http.StatusNotFound, nil)
 		return
 	}
+
+	tmp := service.Nellow.FindByUserID(user.ID)
+	if tmp != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": "すでに寝てます。",
+		})
+		return
+	}
+
 	err := service.Nellow.Create(user.ID, now)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

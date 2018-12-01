@@ -18,7 +18,6 @@ func (n *nellowService) Create(id bson.ObjectId, now time.Time) error {
 		UserID:    id,
 		SleepTime: now,
 	}
-
 	return n.C.Insert(ns)
 }
 
