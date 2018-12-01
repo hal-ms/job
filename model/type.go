@@ -33,3 +33,14 @@ type JobCategory struct {
 }
 
 type JobCategorys []JobCategory
+
+type Config struct {
+	Url Url `json:"url"`
+}
+
+type Url struct {
+	Main   string `json:"main"`
+	Moving string `json:"moving"`
+	LED    string `json:"led"`
+	Game   string `json:"game"`
+}
