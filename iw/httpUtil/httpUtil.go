@@ -9,7 +9,8 @@ import (
 )
 
 func SendFile(name string) error {
-	url := "http://133.167.127.211:8080/upload?path=" + name
+	//url := "http://133.167.127.211:8080/upload/icon?path=" + name
+	url := "localhost:8080/upload/icon?path=" + name
 
 	var buf bytes.Buffer
 
