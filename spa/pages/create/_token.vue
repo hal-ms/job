@@ -33,6 +33,125 @@
   </section>
 </template>
 
+
+<script>
+import axios from "axios";
+
+export default {
+  // retのに値が仕込まれるのを待つためにasync, awaitを用いている
+  async validate({ params }) {
+    let ret = null;
+    await axios
+      .get("https://hal-iot.net/api/alive_token/" + params.token)
+      .then(res => {
+        ret = true;
+      })
+      .catch(err => {
+        ret = false;
+      });
+    return ret;
+  },
+
+  data() {
+    return {
+      jobIDList: null, // for debug
+      userName: "",
+
+      jobCategory: [],
+      selected: null,
+
+      currentSelectedJob: null
+    };
+  },
+
+  mounted() {
+    this.userName = localStorage.getItem("userName");
+    axios.get("https://hal-iot.net/api/job_categorys").then(res => {
+      this.jobCategory = res.data;
+    });
+  },
+
+  methods: {
+    selectJob(job) {
+      this.currentSelectedJob = job;
+    },
+    registerJob() {
+      let token = this.parseToken();
+      if (this.userName == null) {
+        this.danger("名前が入力されていません");
+        return;
+      }
+      if (this.currentSelectedJob == null) {
+        this.danger("ジョブが選択されていません");
+        return;
+      }
+
+      axios
+        .post("https://hal-iot.net/api/job/" + token, {
+          name: this.currentSelectedJob.name,
+          user_name: this.userName
+        })
+        .then(res => {
+          if (this.userName == "") {
+            this.danger("ユーザー名が入力されていません");
+            return;
+          }
+
+          let jobIDStr = localStorage.getItem("jobIDList");
+          if (jobIDStr) {
+            let jobIDList = jobIDStr.split(",");
+            jobIDList.push(res.data.id);
+            localStorage.setItem("jobIDList", jobIDList);
+          } else {
+            localStorage.setItem("jobIDList", res.data.id);
+          }
+          localStorage.setItem("userName", this.userName);
+
+          // this.load()
+          // this.$router.push("/jobs")
+          this.load();
+        });
+    },
+
+    danger(msg) {
+      this.$toast.open({
+        message: msg,
+        type: "is-danger"
+      });
+    },
+
+    sleepByPromise(sec) {
+      return new Promise(resolve => setTimeout(resolve, sec * 1000));
+    },
+
+    async load() {
+      const loadingComponent = this.$loading.open({
+        container: this.isFullPage
+      });
+      await this.sleepByPromise(1);
+      loadingComponent.close();
+      this.$router.push("/jobs");
+    },
+
+    showLocalStorage() {
+      this.jobIDList = localStorage.getItem("jobIDList");
+    },
+
+    clearLocalStorage() {
+      localStorage.removeItem("jobIDList");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("doneIds");
+      console.log("cleared local storage");
+    },
+
+    parseToken() {
+      return location.pathname.split("/")[2]; // 決め打ち
+    }
+  }
+};
+</script>
+
+
 <style scoped>
 .create-job-page-container {
   width: 100vw;
@@ -107,118 +226,3 @@
   border-radius: 10px;
 }
 </style>
-
-
-<script>
-import axios from "axios";
-
-export default {
-  // retのに値が仕込まれるのを待つためにasync, awaitを用いている
-  async validate({ params }) {
-    let ret = null;
-    await axios
-      .get("https://hal-iot.net/api/alive_token/" + params.token)
-      .then(res => {
-        ret = true;
-      })
-      .catch(err => {
-        ret = false;
-      });
-    return ret;
-  },
-
-  data() {
-    return {
-      jobIDList: null, // for debug
-      userName: "",
-
-      jobCategory: [],
-      selected: null,
-
-      currentSelectedJob: null
-    };
-  },
-
-  mounted() {
-    this.userName = localStorage.getItem("userName");
-    axios.get("https://hal-iot.net/api/job_categorys").then(res => {
-      this.jobCategory = res.data;
-    });
-  },
-
-  methods: {
-    selectJob(job) {
-      this.currentSelectedJob = job;
-    },
-    registerJob() {
-      let token = this.parseToken();
-
-      if (this.currentSelectedJob == null) {
-        this.danger("ジョブが選択されていません");
-        return;
-      }
-
-      axios
-        .post("https://hal-iot.net/api/job/" + token, {
-          name: this.currentSelectedJob.name,
-          user_name: this.userName
-        })
-        .then(res => {
-          if (this.userName == "") {
-            this.danger("ユーザー名が入力されていません");
-            return;
-          }
-
-          let jobIDStr = localStorage.getItem("jobIDList");
-          if (jobIDStr) {
-            let jobIDList = jobIDStr.split(",");
-            jobIDList.push(res.data.id);
-            localStorage.setItem("jobIDList", jobIDList);
-          } else {
-            localStorage.setItem("jobIDList", res.data.id);
-          }
-          localStorage.setItem("userName", this.userName);
-
-          // this.load()
-          // this.$router.push("/jobs")
-          this.load();
-        });
-    },
-
-    danger(msg) {
-      this.$toast.open({
-        message: msg,
-        type: "is-danger"
-      });
-    },
-
-    sleepByPromise(sec) {
-      return new Promise(resolve => setTimeout(resolve, sec * 1000));
-    },
-
-    async load() {
-      const loadingComponent = this.$loading.open({
-        container: this.isFullPage
-      });
-      await this.sleepByPromise(1);
-      loadingComponent.close();
-      this.$router.push("/jobs");
-    },
-
-    showLocalStorage() {
-      this.jobIDList = localStorage.getItem("jobIDList");
-    },
-
-    clearLocalStorage() {
-      localStorage.removeItem("jobIDList");
-      localStorage.removeItem("userName");
-      localStorage.removeItem("doneIds");
-      console.log("cleared local storage");
-    },
-
-    parseToken() {
-      return location.pathname.split("/")[2]; // 決め打ち
-    }
-  }
-};
-</script>

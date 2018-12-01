@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/hal-ms/job/repo"
+
 	"github.com/gin-gonic/gin"
 	iwRouter "github.com/hal-ms/job/iw/router"
 )
-
-var qr_host = "http://192.168.0.7:8000/qr"
 
 func GetRouter() *gin.Engine {
 	r := gin.Default()
@@ -17,7 +17,7 @@ func GetRouter() *gin.Engine {
 		c.Status(http.StatusOK)
 	})
 	r.GET("/qr", func(c *gin.Context) {
-		c.Redirect(http.StatusFound, qr_host)
+		c.Redirect(http.StatusFound, repo.Config.Get().Url.Main+"/qr")
 	})
 	r.Static("/_nuxt", "./spa/dist/_nuxt")
 	r.Static("/public", "./public")
