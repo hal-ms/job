@@ -29,7 +29,7 @@ func Share(c *gin.Context) {
 
 	proxyRequest, err := http.NewRequest(
 		"POST",
-		"",
+		"http://133.167.127.211:4000/share",
 		bytes.NewBuffer(b),
 	)
 	if err != nil {
