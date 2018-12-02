@@ -9,7 +9,6 @@ import (
 	"github.com/hal-ms/job/iw/model"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"github.com/hal-ms/job/cnt/req"
 )
 
 var User = userService{db.C("users")}
