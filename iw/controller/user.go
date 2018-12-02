@@ -49,7 +49,7 @@ func (u *userController) Create(c *gin.Context) {
 	}
 
 	if req.IsNellow {
-		user, err := service.User.ResetNellower()
+		user, err := service.User.ResetNellower(req.Name)
 		fmt.Println(err)
 		if err != nil {
 			if err != mgo.ErrNotFound {

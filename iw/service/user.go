@@ -9,6 +9,7 @@ import (
 	"github.com/hal-ms/job/iw/model"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/hal-ms/job/cnt/req"
 )
 
 var User = userService{db.C("users")}
@@ -36,7 +37,7 @@ func (u *userService) FindByID(id string) *model.User {
 	return &user
 }
 
-func (u *userService) ResetNellower() (*model.User, error) {
+func (u *userService) ResetNellower(name string) (*model.User, error) {
 	var user model.User
 	err := u.C.Find(bson.M{"is_nellow": true}).One(&user)
 	fmt.Println(user)
@@ -44,6 +45,10 @@ func (u *userService) ResetNellower() (*model.User, error) {
 		return nil, err
 	}
 	user.Name = "bcp-guest"
+	if name != "" {
+		user.Name = name
+	}
+
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(20) + 1
 	user.Icon = "https://s3-us-west-2.amazonaws.com/dinner-match/nellow/default_img/" + strconv.Itoa(num) + ".png"
