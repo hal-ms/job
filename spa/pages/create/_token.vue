@@ -26,10 +26,10 @@
       <button class="create-button" @click="registerJob"></button>
     </div>
 
-    <h2 class="title">DEBUG</h2>
+    <!-- <h2 class="title">DEBUG</h2>
     <a class="button" @click="showLocalStorage">ローカルストレージを表示</a>
     <a class="button" @click="clearLocalStorage">ローカルストレージを削除</a>
-    <p>local storage: {{ jobIDList }}</p>
+    <p>local storage: {{ jobIDList }}</p> -->
   </section>
 </template>
 
