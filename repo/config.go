@@ -9,10 +9,10 @@ type configService struct {
 
 var configRep = model.Config{
 	Url: model.Url{
-		Main:   "http://192.168.0.18:8000",
+		Main:   "http://192.168.0.2:8000",
 		LED:    "http://192.168.0.12:8000",
 		Moving: "http://192.168.0.13:5000",
-		Game:   "http://192.168.0.18:8080",
+		Game:   "http://192.168.0.2:8080",
 	},
 }
 
